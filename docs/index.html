@@ -12,77 +12,58 @@
     min-height: 100vh;
     color: #333;
   }
+  .lang-bar {
+    text-align: right;
+    padding: 12px 20px;
+  }
+  .lang-bar select {
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: none;
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    outline: none;
+  }
+  .lang-bar select option { color: #333; background: #fff; }
   .hero {
     text-align: center;
-    padding: 60px 20px 40px;
+    padding: 20px 20px 40px;
     color: #fff;
   }
   .hero .icon {
     width: 120px; height: 120px;
     border-radius: 28px;
-    background: rgba(255,255,255,0.2);
-    backdrop-filter: blur(10px);
-    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
     margin: 0 auto 20px;
-    font-size: 60px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
   }
+  .hero .icon img { width: 100%; height: 100%; object-fit: cover; }
   .hero h1 { font-size: 2.2em; font-weight: 700; margin-bottom: 8px; }
   .hero p { font-size: 1.1em; opacity: 0.9; }
-  .container {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 0 20px 60px;
-  }
+  .container { max-width: 720px; margin: 0 auto; padding: 0 20px 60px; }
   .card {
-    background: #fff;
-    border-radius: 16px;
-    padding: 32px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+    background: #fff; border-radius: 16px; padding: 32px;
+    margin-bottom: 20px; box-shadow: 0 4px 24px rgba(0,0,0,0.1);
   }
-  .card h2 {
-    font-size: 1.3em;
-    margin-bottom: 16px;
-    color: #5b4a9e;
-  }
-  .card p, .card li {
-    line-height: 1.8;
-    color: #555;
-    font-size: 0.95em;
-  }
+  .card h2 { font-size: 1.3em; margin-bottom: 16px; color: #5b4a9e; }
+  .card p, .card li { line-height: 1.8; color: #555; font-size: 0.95em; }
   .card ul { padding-left: 20px; }
   .card li { margin-bottom: 6px; }
   .features-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-top: 12px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 12px; margin-top: 12px;
   }
   .feature-item {
-    background: #f8f6ff;
-    border-radius: 12px;
-    padding: 16px;
-    text-align: center;
+    background: #f8f6ff; border-radius: 12px;
+    padding: 16px; text-align: center;
   }
   .feature-item .emoji { font-size: 28px; margin-bottom: 6px; }
   .feature-item .label { font-size: 0.85em; color: #5b4a9e; font-weight: 600; }
-  .contact-link {
-    display: inline-block;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: #fff;
-    text-decoration: none;
-    padding: 12px 32px;
-    border-radius: 30px;
-    font-weight: 600;
-    margin-top: 12px;
-    transition: transform 0.2s;
-  }
-  .contact-link:hover { transform: scale(1.05); }
   .footer {
-    text-align: center;
-    padding: 30px 20px;
-    color: rgba(255,255,255,0.7);
-    font-size: 0.85em;
+    text-align: center; padding: 30px 20px;
+    color: rgba(255,255,255,0.7); font-size: 0.85em;
   }
   .footer a { color: rgba(255,255,255,0.9); text-decoration: none; }
   @media (max-width: 480px) {
@@ -93,86 +74,250 @@
 </head>
 <body>
 
+<div class="lang-bar">
+  <select id="langSelect" onchange="switchLang(this.value)">
+    <option value="en">English</option>
+    <option value="zh">中文</option>
+    <option value="ko">한국어</option>
+    <option value="ja">日本語</option>
+    <option value="es">Español</option>
+    <option value="pt">Português</option>
+    <option value="fr">Français</option>
+    <option value="de">Deutsch</option>
+    <option value="ru">Русский</option>
+    <option value="it">Italiano</option>
+    <option value="vi">Tiếng Việt</option>
+    <option value="ar">العربية</option>
+  </select>
+</div>
+
 <div class="hero">
-  <div class="icon">📖</div>
+  <div class="icon"><img src="app-icon.png" alt="iBible AI"></div>
   <h1>iBible AI</h1>
-  <p>AI-Powered Bible Study Companion</p>
+  <p id="t_subtitle"></p>
 </div>
 
 <div class="container">
-
   <div class="card">
-    <h2>✨ About</h2>
-    <p>iBible AI is your intelligent Bible companion, combining the timeless wisdom of Scripture with the power of AI to help you read, understand, and live God's Word every day.</p>
+    <h2 id="t_about"></h2>
+    <p id="t_about_desc"></p>
     <div class="features-grid">
-      <div class="feature-item">
-        <div class="emoji">🤖</div>
-        <div class="label">AI Bible Assistant</div>
-      </div>
-      <div class="feature-item">
-        <div class="emoji">📅</div>
-        <div class="label">Verse of the Day</div>
-      </div>
-      <div class="feature-item">
-        <div class="emoji">📋</div>
-        <div class="label">Reading Plans</div>
-      </div>
-      <div class="feature-item">
-        <div class="emoji">🔊</div>
-        <div class="label">Audio Bible</div>
-      </div>
-      <div class="feature-item">
-        <div class="emoji">❤️</div>
-        <div class="label">Favorites</div>
-      </div>
-      <div class="feature-item">
-        <div class="emoji">🌍</div>
-        <div class="label">12 Languages</div>
-      </div>
+      <div class="feature-item"><div class="emoji">🤖</div><div class="label" id="t_f1"></div></div>
+      <div class="feature-item"><div class="emoji">📅</div><div class="label" id="t_f2"></div></div>
+      <div class="feature-item"><div class="emoji">📋</div><div class="label" id="t_f3"></div></div>
+      <div class="feature-item"><div class="emoji">🔊</div><div class="label" id="t_f4"></div></div>
+      <div class="feature-item"><div class="emoji">❤️</div><div class="label" id="t_f5"></div></div>
+      <div class="feature-item"><div class="emoji">🌍</div><div class="label" id="t_f6"></div></div>
     </div>
   </div>
-
   <div class="card">
-    <h2>📬 Support</h2>
-    <p>We're here to help! If you encounter any issues or have suggestions, please don't hesitate to reach out.</p>
+    <h2 id="t_support"></h2>
+    <p id="t_support_desc"></p>
     <br>
-    <p><strong>Email:</strong> <a href="mailto:ibibleai.support@gmail.com" style="color:#5b4a9e;">ibibleai.support@gmail.com</a></p>
+    <p><strong id="t_email_label"></strong> <a href="mailto:284122171@qq.com" style="color:#5b4a9e;">284122171@qq.com</a></p>
     <br>
-    <p>We typically respond within 24 hours. Please include your device model and iOS version in your message to help us assist you faster.</p>
+    <p id="t_support_note"></p>
   </div>
-
   <div class="card">
-    <h2>❓ FAQ</h2>
+    <h2 id="t_faq"></h2>
     <ul>
-      <li><strong>Is iBible AI free?</strong><br>Yes! iBible AI is completely free to use. You can optionally support development through donations.</li>
-      <li><strong>Do I need an account?</strong><br>No account needed. Your data stays on your device — we respect your privacy.</li>
-      <li><strong>Which Bible versions are supported?</strong><br>Multiple versions including KJV, ASV, CUV, and more, with automatic language matching.</li>
-      <li><strong>How many languages are supported?</strong><br>12 languages: English, Chinese, Korean, Japanese, Spanish, Portuguese, French, German, Russian, Italian, Vietnamese, and Arabic.</li>
-      <li><strong>Does the AI require internet?</strong><br>Yes, the AI assistant requires an internet connection. Bible reading and favorites work offline.</li>
+      <li id="t_faq1"></li>
+      <li id="t_faq2"></li>
+      <li id="t_faq3"></li>
+      <li id="t_faq4"></li>
+      <li id="t_faq5"></li>
     </ul>
   </div>
-
   <div class="card">
-    <h2>🔒 Privacy</h2>
-    <p>Your privacy matters to us. iBible AI:</p>
-    <ul>
-      <li>Does not require any account or sign-in</li>
-      <li>Does not collect personal information</li>
-      <li>Stores all data locally on your device</li>
-      <li>Does not share data with third parties</li>
-    </ul>
+    <h2 id="t_privacy"></h2>
+    <p id="t_privacy_desc"></p>
+    <ul id="t_privacy_list"></ul>
     <br>
-    <p>For more details, please see our <a href="privacy.html" style="color:#5b4a9e;">Privacy Policy</a>.</p>
+    <p><a href="privacy.html" style="color:#5b4a9e;" id="t_privacy_link"></a></p>
   </div>
-
 </div>
 
 <div class="footer">
-  <p>© 2025 iBible AI. All rights reserved.</p>
-  <p style="margin-top: 8px;">
-    <a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms of Service</a>
+  <p>&copy; 2025 iBible AI. All rights reserved.</p>
+  <p style="margin-top:8px;">
+    <a href="privacy.html">Privacy Policy</a> &middot; <a href="terms.html">Terms of Service</a>
   </p>
 </div>
 
+<script>
+const i18n = {
+  en: {
+    subtitle: "AI-Powered Bible Study Companion",
+    about: "✨ About", about_desc: "iBible AI is your intelligent Bible companion, combining the timeless wisdom of Scripture with the power of AI to help you read, understand, and live God's Word every day.",
+    f1: "AI Bible Assistant", f2: "Verse of the Day", f3: "Reading Plans", f4: "Audio Bible", f5: "Favorites", f6: "12 Languages",
+    support: "📬 Support", support_desc: "We're here to help! If you encounter any issues or have suggestions, please don't hesitate to reach out.", email_label: "Email:", support_note: "We typically respond within 24 hours. Please include your device model and OS version.",
+    faq: "❓ FAQ",
+    faq1: "<strong>Is iBible AI free?</strong><br>Yes! Completely free. You can optionally support development through donations.",
+    faq2: "<strong>Do I need an account?</strong><br>No account needed. Your data stays on your device.",
+    faq3: "<strong>Which Bible versions?</strong><br>Multiple versions including KJV, ASV, CUV, with automatic language matching.",
+    faq4: "<strong>How many languages?</strong><br>12 languages: English, Chinese, Korean, Japanese, Spanish, Portuguese, French, German, Russian, Italian, Vietnamese, Arabic.",
+    faq5: "<strong>Does AI require internet?</strong><br>Yes. Bible reading and favorites work offline.",
+    privacy: "🔒 Privacy", privacy_desc: "Your privacy matters to us. iBible AI:",
+    privacy_items: ["Does not require any account or sign-in","Does not collect personal information","Stores all data locally on your device","Does not share data with third parties"],
+    privacy_link: "View full Privacy Policy →"
+  },
+  zh: {
+    subtitle: "AI 智能圣经学习助手",
+    about: "✨ 关于", about_desc: "iBible AI 是您的智能圣经伴侣，将永恒的经文智慧与AI的力量相结合，帮助您每天阅读、理解并活出上帝的话语。",
+    f1: "AI 圣经助手", f2: "每日经文", f3: "读经计划", f4: "语音圣经", f5: "收藏夹", f6: "12种语言",
+    support: "📬 技术支持", support_desc: "我们随时为您提供帮助！如果您遇到任何问题或有建议，请随时联系我们。", email_label: "邮箱：", support_note: "我们通常在24小时内回复。请在消息中注明您的设备型号和系统版本。",
+    faq: "❓ 常见问题",
+    faq1: "<strong>iBible AI 免费吗？</strong><br>是的！完全免费。您可以通过捐赠来支持开发。",
+    faq2: "<strong>需要注册账号吗？</strong><br>不需要。您的数据保存在本地设备上。",
+    faq3: "<strong>支持哪些圣经版本？</strong><br>支持多种版本，包括和合本、KJV、ASV等，自动匹配语言。",
+    faq4: "<strong>支持多少种语言？</strong><br>12种语言：中文、英文、韩文、日文、西班牙文、葡萄牙文、法文、德文、俄文、意大利文、越南文、阿拉伯文。",
+    faq5: "<strong>AI功能需要联网吗？</strong><br>需要。圣经阅读和收藏可以离线使用。",
+    privacy: "🔒 隐私保护", privacy_desc: "您的隐私对我们至关重要。iBible AI：",
+    privacy_items: ["无需注册或登录","不收集个人信息","所有数据存储在您的设备上","不与第三方共享数据"],
+    privacy_link: "查看完整隐私政策 →"
+  },
+  ko: {
+    subtitle: "AI 기반 성경 학습 도우미",
+    about: "✨ 소개", about_desc: "iBible AI는 성경의 영원한 지혜와 AI의 힘을 결합하여 매일 하나님의 말씀을 읽고 이해하도록 돕는 지능형 성경 동반자입니다.",
+    f1: "AI 성경 도우미", f2: "오늘의 말씀", f3: "읽기 계획", f4: "오디오 성경", f5: "즐겨찾기", f6: "12개 언어",
+    support: "📬 지원", support_desc: "문제가 있거나 제안 사항이 있으면 언제든지 연락해 주세요.", email_label: "이메일:", support_note: "보통 24시간 이내에 답변드립니다.",
+    faq: "❓ FAQ", faq1: "<strong>무료인가요?</strong><br>네! 완전 무료입니다.", faq2: "<strong>계정이 필요한가요?</strong><br>아니요. 데이터는 기기에 저장됩니다.", faq3: "<strong>어떤 성경 버전?</strong><br>KJV, ASV 등 다양한 버전을 지원합니다.", faq4: "<strong>몇 개 언어?</strong><br>12개 언어를 지원합니다.", faq5: "<strong>AI에 인터넷이 필요한가요?</strong><br>네. 성경 읽기와 즐겨찾기는 오프라인으로 사용 가능합니다.",
+    privacy: "🔒 개인정보", privacy_desc: "iBible AI는 개인정보를 보호합니다:",
+    privacy_items: ["계정 등록 불필요","개인정보 수집 안 함","모든 데이터는 기기에 저장","제3자와 데이터 공유 안 함"],
+    privacy_link: "개인정보 처리방침 보기 →"
+  },
+  ja: {
+    subtitle: "AI搭載 聖書学習コンパニオン",
+    about: "✨ 概要", about_desc: "iBible AIは、聖書の永遠の知恵とAIの力を組み合わせた知的な聖書コンパニオンです。毎日、神の御言葉を読み、理解するお手伝いをします。",
+    f1: "AI聖書アシスタント", f2: "今日の聖句", f3: "読書プラン", f4: "音声聖書", f5: "お気に入り", f6: "12言語対応",
+    support: "📬 サポート", support_desc: "問題や提案がありましたら、お気軽にお問い合わせください。", email_label: "メール:", support_note: "通常24時間以内に返信いたします。",
+    faq: "❓ よくある質問", faq1: "<strong>無料ですか？</strong><br>はい！完全無料です。", faq2: "<strong>アカウントは必要？</strong><br>いいえ。データは端末に保存されます。", faq3: "<strong>対応聖書版？</strong><br>KJV、ASVなど多数対応。", faq4: "<strong>対応言語数？</strong><br>12言語対応。", faq5: "<strong>AIにネット必要？</strong><br>はい。聖書閲覧とお気に入りはオフライン可。",
+    privacy: "🔒 プライバシー", privacy_desc: "iBible AIはプライバシーを大切にします:",
+    privacy_items: ["アカウント登録不要","個人情報を収集しない","すべてのデータは端末に保存","第三者とデータ共有しない"],
+    privacy_link: "プライバシーポリシーを見る →"
+  },
+  es: {
+    subtitle: "Compañero de Estudio Bíblico con IA",
+    about: "✨ Acerca de", about_desc: "iBible AI es tu compañero bíblico inteligente, combinando la sabiduría eterna de las Escrituras con el poder de la IA para ayudarte a leer y comprender la Palabra de Dios cada día.",
+    f1: "Asistente Bíblico IA", f2: "Versículo del Día", f3: "Planes de Lectura", f4: "Biblia en Audio", f5: "Favoritos", f6: "12 Idiomas",
+    support: "📬 Soporte", support_desc: "Si encuentras problemas o tienes sugerencias, no dudes en contactarnos.", email_label: "Correo:", support_note: "Respondemos en 24 horas.",
+    faq: "❓ Preguntas Frecuentes", faq1: "<strong>¿Es gratis?</strong><br>¡Sí! Completamente gratis.", faq2: "<strong>¿Necesito cuenta?</strong><br>No. Tus datos se guardan en tu dispositivo.", faq3: "<strong>¿Qué versiones?</strong><br>KJV, ASV, RVR y más.", faq4: "<strong>¿Cuántos idiomas?</strong><br>12 idiomas.", faq5: "<strong>¿La IA necesita internet?</strong><br>Sí. Lectura y favoritos funcionan sin conexión.",
+    privacy: "🔒 Privacidad", privacy_desc: "Tu privacidad nos importa. iBible AI:",
+    privacy_items: ["No requiere cuenta","No recopila información personal","Datos almacenados localmente","No comparte datos con terceros"],
+    privacy_link: "Ver Política de Privacidad →"
+  },
+  pt: {
+    subtitle: "Companheiro de Estudo Bíblico com IA",
+    about: "✨ Sobre", about_desc: "iBible AI é seu companheiro bíblico inteligente, combinando a sabedoria eterna das Escrituras com o poder da IA para ajudá-lo a ler e compreender a Palavra de Deus todos os dias.",
+    f1: "Assistente Bíblico IA", f2: "Versículo do Dia", f3: "Planos de Leitura", f4: "Bíblia em Áudio", f5: "Favoritos", f6: "12 Idiomas",
+    support: "📬 Suporte", support_desc: "Se encontrar problemas ou tiver sugestões, entre em contato.", email_label: "E-mail:", support_note: "Respondemos em 24 horas.",
+    faq: "❓ Perguntas Frequentes", faq1: "<strong>É gratuito?</strong><br>Sim! Completamente gratuito.", faq2: "<strong>Preciso de conta?</strong><br>Não. Seus dados ficam no dispositivo.", faq3: "<strong>Quais versões?</strong><br>KJV, ASV, ARC e mais.", faq4: "<strong>Quantos idiomas?</strong><br>12 idiomas.", faq5: "<strong>A IA precisa de internet?</strong><br>Sim. Leitura e favoritos funcionam offline.",
+    privacy: "🔒 Privacidade", privacy_desc: "Sua privacidade é importante. iBible AI:",
+    privacy_items: ["Não requer conta","Não coleta informações pessoais","Dados armazenados localmente","Não compartilha dados com terceiros"],
+    privacy_link: "Ver Política de Privacidade →"
+  },
+  fr: {
+    subtitle: "Compagnon d'Étude Biblique IA",
+    about: "✨ À propos", about_desc: "iBible AI est votre compagnon biblique intelligent, alliant la sagesse éternelle des Écritures à la puissance de l'IA pour vous aider à lire et comprendre la Parole de Dieu chaque jour.",
+    f1: "Assistant Biblique IA", f2: "Verset du Jour", f3: "Plans de Lecture", f4: "Bible Audio", f5: "Favoris", f6: "12 Langues",
+    support: "📬 Support", support_desc: "Si vous rencontrez des problèmes ou avez des suggestions, n'hésitez pas à nous contacter.", email_label: "E-mail :", support_note: "Nous répondons sous 24 heures.",
+    faq: "❓ FAQ", faq1: "<strong>C'est gratuit ?</strong><br>Oui ! Entièrement gratuit.", faq2: "<strong>Faut-il un compte ?</strong><br>Non. Vos données restent sur votre appareil.", faq3: "<strong>Quelles versions ?</strong><br>KJV, ASV, LSG et plus.", faq4: "<strong>Combien de langues ?</strong><br>12 langues.", faq5: "<strong>L'IA nécessite internet ?</strong><br>Oui. Lecture et favoris fonctionnent hors ligne.",
+    privacy: "🔒 Confidentialité", privacy_desc: "Votre vie privée compte. iBible AI :",
+    privacy_items: ["Aucun compte requis","Ne collecte pas d'informations personnelles","Données stockées localement","Ne partage pas de données avec des tiers"],
+    privacy_link: "Voir la Politique de Confidentialité →"
+  },
+  de: {
+    subtitle: "KI-gestützter Bibel-Studienbegleiter",
+    about: "✨ Über uns", about_desc: "iBible AI ist Ihr intelligenter Bibelbegleiter, der die ewige Weisheit der Schrift mit der Kraft der KI verbindet, um Ihnen beim täglichen Lesen und Verstehen von Gottes Wort zu helfen.",
+    f1: "KI-Bibelassistent", f2: "Tagesvers", f3: "Lesepläne", f4: "Hörbibel", f5: "Favoriten", f6: "12 Sprachen",
+    support: "📬 Support", support_desc: "Bei Problemen oder Vorschlägen kontaktieren Sie uns gerne.", email_label: "E-Mail:", support_note: "Wir antworten innerhalb von 24 Stunden.",
+    faq: "❓ FAQ", faq1: "<strong>Ist es kostenlos?</strong><br>Ja! Völlig kostenlos.", faq2: "<strong>Brauche ich ein Konto?</strong><br>Nein. Daten bleiben auf Ihrem Gerät.", faq3: "<strong>Welche Versionen?</strong><br>KJV, ASV, Luther und mehr.", faq4: "<strong>Wie viele Sprachen?</strong><br>12 Sprachen.", faq5: "<strong>Braucht KI Internet?</strong><br>Ja. Bibellesen und Favoriten funktionieren offline.",
+    privacy: "🔒 Datenschutz", privacy_desc: "Ihr Datenschutz ist uns wichtig. iBible AI:",
+    privacy_items: ["Kein Konto erforderlich","Sammelt keine persönlichen Daten","Alle Daten lokal gespeichert","Teilt keine Daten mit Dritten"],
+    privacy_link: "Datenschutzrichtlinie ansehen →"
+  },
+  ru: {
+    subtitle: "Библейский помощник на базе ИИ",
+    about: "✨ О приложении", about_desc: "iBible AI — ваш интеллектуальный библейский спутник, сочетающий вечную мудрость Писания с силой ИИ, чтобы помочь вам читать и понимать Слово Божье каждый день.",
+    f1: "ИИ-помощник", f2: "Стих дня", f3: "Планы чтения", f4: "Аудио Библия", f5: "Избранное", f6: "12 языков",
+    support: "📬 Поддержка", support_desc: "Если у вас возникли проблемы или есть предложения, свяжитесь с нами.", email_label: "Email:", support_note: "Мы отвечаем в течение 24 часов.",
+    faq: "❓ FAQ", faq1: "<strong>Бесплатно?</strong><br>Да! Полностью бесплатно.", faq2: "<strong>Нужен аккаунт?</strong><br>Нет. Данные хранятся на устройстве.", faq3: "<strong>Какие версии?</strong><br>KJV, ASV, Синодальный и др.", faq4: "<strong>Сколько языков?</strong><br>12 языков.", faq5: "<strong>ИИ нужен интернет?</strong><br>Да. Чтение и избранное работают офлайн.",
+    privacy: "🔒 Конфиденциальность", privacy_desc: "Мы заботимся о вашей конфиденциальности. iBible AI:",
+    privacy_items: ["Не требует регистрации","Не собирает личные данные","Все данные хранятся локально","Не передаёт данные третьим лицам"],
+    privacy_link: "Политика конфиденциальности →"
+  },
+  it: {
+    subtitle: "Compagno di Studio Biblico con IA",
+    about: "✨ Informazioni", about_desc: "iBible AI è il tuo compagno biblico intelligente, che unisce la saggezza eterna delle Scritture con la potenza dell'IA per aiutarti a leggere e comprendere la Parola di Dio ogni giorno.",
+    f1: "Assistente Biblico IA", f2: "Versetto del Giorno", f3: "Piani di Lettura", f4: "Bibbia Audio", f5: "Preferiti", f6: "12 Lingue",
+    support: "📬 Supporto", support_desc: "Se riscontri problemi o hai suggerimenti, contattaci.", email_label: "Email:", support_note: "Rispondiamo entro 24 ore.",
+    faq: "❓ FAQ", faq1: "<strong>È gratuito?</strong><br>Sì! Completamente gratuito.", faq2: "<strong>Serve un account?</strong><br>No. I dati restano sul dispositivo.", faq3: "<strong>Quali versioni?</strong><br>KJV, ASV, CEI e altre.", faq4: "<strong>Quante lingue?</strong><br>12 lingue.", faq5: "<strong>L'IA richiede internet?</strong><br>Sì. Lettura e preferiti funzionano offline.",
+    privacy: "🔒 Privacy", privacy_desc: "La tua privacy è importante. iBible AI:",
+    privacy_items: ["Nessun account richiesto","Non raccoglie informazioni personali","Dati archiviati localmente","Non condivide dati con terze parti"],
+    privacy_link: "Vedi Informativa sulla Privacy →"
+  },
+  vi: {
+    subtitle: "Trợ lý Học Kinh Thánh AI",
+    about: "✨ Giới thiệu", about_desc: "iBible AI là người bạn đồng hành Kinh Thánh thông minh, kết hợp trí tuệ vĩnh cửu của Kinh Thánh với sức mạnh AI để giúp bạn đọc và hiểu Lời Chúa mỗi ngày.",
+    f1: "Trợ lý Kinh Thánh AI", f2: "Câu gốc hôm nay", f3: "Kế hoạch đọc", f4: "Kinh Thánh Audio", f5: "Yêu thích", f6: "12 Ngôn ngữ",
+    support: "📬 Hỗ trợ", support_desc: "Nếu bạn gặp vấn đề hoặc có góp ý, hãy liên hệ chúng tôi.", email_label: "Email:", support_note: "Chúng tôi phản hồi trong 24 giờ.",
+    faq: "❓ Câu hỏi thường gặp", faq1: "<strong>Miễn phí không?</strong><br>Có! Hoàn toàn miễn phí.", faq2: "<strong>Cần tài khoản?</strong><br>Không. Dữ liệu lưu trên thiết bị.", faq3: "<strong>Phiên bản nào?</strong><br>KJV, ASV và nhiều hơn.", faq4: "<strong>Bao nhiêu ngôn ngữ?</strong><br>12 ngôn ngữ.", faq5: "<strong>AI cần internet?</strong><br>Có. Đọc và yêu thích hoạt động ngoại tuyến.",
+    privacy: "🔒 Quyền riêng tư", privacy_desc: "iBible AI bảo vệ quyền riêng tư của bạn:",
+    privacy_items: ["Không cần đăng ký","Không thu thập thông tin cá nhân","Dữ liệu lưu trữ cục bộ","Không chia sẻ với bên thứ ba"],
+    privacy_link: "Xem Chính sách Quyền riêng tư →"
+  },
+  ar: {
+    subtitle: "رفيق دراسة الكتاب المقدس بالذكاء الاصطناعي",
+    about: "✨ حول التطبيق", about_desc: "iBible AI هو رفيقك الذكي للكتاب المقدس، يجمع بين حكمة الكتاب المقدس الأبدية وقوة الذكاء الاصطناعي لمساعدتك على قراءة وفهم كلمة الله كل يوم.",
+    f1: "مساعد الكتاب المقدس", f2: "آية اليوم", f3: "خطط القراءة", f4: "الكتاب المقدس الصوتي", f5: "المفضلة", f6: "12 لغة",
+    support: "📬 الدعم", support_desc: "إذا واجهت أي مشاكل أو لديك اقتراحات، لا تتردد في التواصل معنا.", email_label: "البريد:", support_note: "نرد خلال 24 ساعة.",
+    faq: "❓ الأسئلة الشائعة", faq1: "<strong>هل هو مجاني؟</strong><br>نعم! مجاني تماماً.", faq2: "<strong>هل أحتاج حساب؟</strong><br>لا. بياناتك محفوظة على جهازك.", faq3: "<strong>أي إصدارات؟</strong><br>KJV وASV وغيرها.", faq4: "<strong>كم لغة؟</strong><br>12 لغة.", faq5: "<strong>هل يحتاج الذكاء الاصطناعي إنترنت؟</strong><br>نعم. القراءة والمفضلة تعمل بدون إنترنت.",
+    privacy: "🔒 الخصوصية", privacy_desc: "خصوصيتك مهمة لنا. iBible AI:",
+    privacy_items: ["لا يتطلب تسجيل","لا يجمع معلومات شخصية","البيانات مخزنة محلياً","لا يشارك البيانات مع أطراف ثالثة"],
+    privacy_link: "عرض سياسة الخصوصية ←"
+  }
+};
+
+function switchLang(lang) {
+  const t = i18n[lang] || i18n.en;
+  document.getElementById('t_subtitle').textContent = t.subtitle;
+  document.getElementById('t_about').innerHTML = t.about;
+  document.getElementById('t_about_desc').textContent = t.about_desc;
+  document.getElementById('t_f1').textContent = t.f1;
+  document.getElementById('t_f2').textContent = t.f2;
+  document.getElementById('t_f3').textContent = t.f3;
+  document.getElementById('t_f4').textContent = t.f4;
+  document.getElementById('t_f5').textContent = t.f5;
+  document.getElementById('t_f6').textContent = t.f6;
+  document.getElementById('t_support').innerHTML = t.support;
+  document.getElementById('t_support_desc').textContent = t.support_desc;
+  document.getElementById('t_email_label').textContent = t.email_label;
+  document.getElementById('t_support_note').textContent = t.support_note;
+  document.getElementById('t_faq').innerHTML = t.faq;
+  document.getElementById('t_faq1').innerHTML = t.faq1;
+  document.getElementById('t_faq2').innerHTML = t.faq2;
+  document.getElementById('t_faq3').innerHTML = t.faq3;
+  document.getElementById('t_faq4').innerHTML = t.faq4;
+  document.getElementById('t_faq5').innerHTML = t.faq5;
+  document.getElementById('t_privacy').innerHTML = t.privacy;
+  document.getElementById('t_privacy_desc').textContent = t.privacy_desc;
+  const pl = document.getElementById('t_privacy_list');
+  pl.innerHTML = t.privacy_items.map(i => '<li>' + i + '</li>').join('');
+  document.getElementById('t_privacy_link').textContent = t.privacy_link;
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  localStorage.setItem('lang', lang);
+}
+
+// Auto-detect language
+(function() {
+  const saved = localStorage.getItem('lang');
+  if (saved && i18n[saved]) { document.getElementById('langSelect').value = saved; switchLang(saved); return; }
+  const bl = (navigator.language || '').toLowerCase();
+  const code = bl.startsWith('zh') ? 'zh' : bl.startsWith('ko') ? 'ko' : bl.startsWith('ja') ? 'ja' : bl.startsWith('es') ? 'es' : bl.startsWith('pt') ? 'pt' : bl.startsWith('fr') ? 'fr' : bl.startsWith('de') ? 'de' : bl.startsWith('ru') ? 'ru' : bl.startsWith('it') ? 'it' : bl.startsWith('vi') ? 'vi' : bl.startsWith('ar') ? 'ar' : 'en';
+  document.getElementById('langSelect').value = code;
+  switchLang(code);
+})();
+</script>
 </body>
 </html>
